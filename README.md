@@ -1,6 +1,6 @@
-# playground
+# playground JAVA
 
-Just playing around with Selenium Java using [timvroom playground](http://timvroom.com/selenium/playground/). The test will run the below tests outlined on the page.
+Just playing around with **Selenium WebDriver Java** using [timvroom playground](http://timvroom.com/selenium/playground/). The test will run the below test steps taken from the playground page.
 
 1. Grab page title and place title text in answer slot #1
 2. Fill out name section of form to be Kilgore Trout
