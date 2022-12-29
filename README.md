@@ -1,4 +1,4 @@
-# playground JAVA
+# playground Java
 
 Just playing around with **Selenium WebDriver Java** using [timvroom playground](http://timvroom.com/selenium/playground/). The test will run the below test steps taken from the playground page.
 
