@@ -21,15 +21,15 @@ Just playing around with **Selenium WebDriver Java** using [timvroom playground]
 17. Click the submit button on the form
 
 ### Getting Started
-To run the test on your local machine:
+To run the test on your local machine parallelly on both Chrome and Firefox browsers:
 
 - Download and install [Java](https://www.oracle.com/java/technologies/downloads/).
 - Download and install [Maven](https://maven.apache.org/download.cgi).
 - Set Java and Maven User variables.
 - Clone the Repo to your local machine.
-- From the project root directory, run the following command to run the test with Chrome
+- From the project root directory (i.e cd-ing into .../playground), run the following command
 ```
-mvn test
+mvn test -PParallel
 ```
 
 Thanks!
