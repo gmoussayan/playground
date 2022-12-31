@@ -7,60 +7,66 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+public class PlaygroundTests extends Base {
 
-public class PlaygroundTests {
+	By answerSlot1 = By.id("answer1");
+	By nameSlot = By.id("name");
+	By sciFiAuthor = By.cssSelector("select[id='occupation'] option[value='scifiauthor']");
+	By answerSlot4 = By.id("answer4");
+	By blueBox = By.cssSelector("span[class='bluebox']");
+	By clickMe = By.linkText("click me");
+	By redBox = By.id("redbox");
+	By answerSlot8 = By.id("answer8");
+	By wroteBook = By.cssSelector("form[id='testform'] input[value='wrotebook']");
+	By answerSlot6 = By.id("answer6");
+	By answerSlot10 = By.id("answer10");
+	By topBox = By.xpath("(//script[@type='text/javascript'])[4]");
+	By answerSlot11 = By.id("answer11");
+	By idAvailability = By.cssSelector("div[id='ishere']");
+	By answerSlot13 = By.id("answer13");
+	By purpleBoxVisible = By.id("purplebox");
+	By answerSlot14 = By.id("answer14");
+	By clickThenWait = By.linkText("click then wait");
+	By clickAfterWait = By.linkText("click after wait");
+	By submit = By.name("submit");
+	By checkResultsButton = By.id("checkresults");
+	By result = By.id("showresults");
+	By bottomDIV = By.id("bottom");
+	By topHead = By.id("tophead");
 
-	@Test
+	@Test()
 	public void playgroundTests() throws InterruptedException {
 
-		WebDriver driver;
-		ChromeOptions chromeOptions = new ChromeOptions();
-		WebDriverManager.chromedriver().clearDriverCache().setup();
-		chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-		driver = new ChromeDriver(chromeOptions);
-
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-		driver.manage().deleteAllCookies();
-		driver.manage().window().maximize();
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-
-		driver.get("http://timvroom.com/selenium/playground/");
 
 		// 1- Grab page title and place title text in answer slot #1
 		String title = driver.getTitle();
-		driver.findElement(By.id("answer1")).sendKeys(title);
+		type(answerSlot1, title);
 
 		// 2- Fill out name section of form to be Kilgore Trout
-		driver.findElement(By.id("name")).sendKeys("Kilgore Trout");
+		// String name = "Kilgore Trout";
+		type(nameSlot, "Kilgore Trout");
 
 		// 3- Set occupation on form to Sci-Fi Author
-		driver.findElement(By.cssSelector("option[value='scifiauthor']")).click();
+		click(sciFiAuthor);
 
 		// 4- Count number of blue_boxes on page after form and enter into answer box #4
-		List<WebElement> blueBoxes = driver.findElements(By.cssSelector("span[class='bluebox']"));
-		int blueBoxesSize = blueBoxes.size();
-		String str = Integer.toString(blueBoxesSize);
-		driver.findElement(By.id("answer4")).sendKeys(str);
+		String stringifiedSize = Integer.toString(finds(blueBox).size());
+		type(answerSlot4, stringifiedSize);
 
 		// 5- Click link that says 'click me'
-		driver.findElement(By.linkText("click me")).click();
+		click(clickMe);
 
 		// 6- Find red box on its page find class applied to it, and enter into answer
 		// box #6
-		WebElement redBox = driver.findElement(By.id("redbox"));
-		String className = redBox.getAttribute("class");
-		driver.findElement(By.id("answer6")).sendKeys(className);
+		String redBoxClass = find(redBox).getAttribute("class");
+		type(answerSlot6, redBoxClass);
 
 		// 7- Run JavaScript function as: ran_this_js_function() from your Selenium
 		// script
@@ -69,29 +75,19 @@ public class PlaygroundTests {
 		// 8- Run JavaScript function as: got_return_from_js_function() from your
 		// Selenium script, take returned value and place it in answer slot #8
 		String returnedValue = js.executeScript("return got_return_from_js_function();").toString();
-		driver.findElement(By.id("answer8")).sendKeys(returnedValue);
+		type(answerSlot8, returnedValue);
 
 		// 9- Mark radio button on form for written book? to Yes
-		driver.findElement(By.cssSelector("input[value='wrotebook']")).click();
+		click(wroteBook);
 
 		// 10- Get the text from the Red Box and place it in answer slot #10
-		String redBoxText = redBox.getText();
-		driver.findElement(By.id("answer10")).sendKeys(redBoxText);
+		String text = getText(redBox);
+		type(answerSlot10, text);
 
 		// 11- Which box is on top? orange or green -- place correct color in answer
 		// slot #11
-		WebElement element = driver.findElement(By.xpath("(//script[@type='text/javascript'])[4]"));
-		String boxColor = js.executeScript("return box_order[0];", element).toString();
-
-		if (boxColor.equalsIgnoreCase("orange")) {
-
-			driver.findElement(By.id("answer11")).sendKeys(boxColor);
-
-		} else {
-
-			driver.findElement(By.id("answer11")).sendKeys("green");
-
-		}
+		String boxColor = js.executeScript("return box_order[0];", find(topBox)).toString();
+		type(answerSlot11, boxColor);
 
 		// 12- Set browser width to 850 and height to 650
 		driver.manage().window().setPosition(new Point(0, 0));
@@ -99,28 +95,25 @@ public class PlaygroundTests {
 
 		// 13- Type into answer slot 13 yes or no depending on whether item by id of
 		// ishere is on the page
-		int ishereOrNot = driver.findElements(By.cssSelector("div[id='ishere']")).size();
-		if (ishereOrNot > 0) {
+		if (finds(idAvailability).size() > 0) {
 
-			driver.findElement(By.id("answer13")).sendKeys("yes");
+			type(answerSlot13, "yes");
 		}
 
 		else {
 
-			driver.findElement(By.id("answer13")).sendKeys("no");
+			type(answerSlot13, "no");
 
 		}
 
 		// 14- Type into answer slot 14 yes or no depending on whether item with id of
 		// purplebox is visible
-		String purpleAvailability = driver.findElement(By.id("purplebox")).getAttribute("style");
-		if (purpleAvailability.contains("none")) {
+		if (find(purpleBoxVisible).getAttribute("style").contains("none")) {
 
-			driver.findElement(By.id("answer14")).sendKeys("no");
+			type(answerSlot14, "no");
 		} else {
 
-			driver.findElement(By.id("answer14")).sendKeys("yes");
-
+			type(answerSlot14, "yes");
 		}
 		;
 
@@ -128,34 +121,54 @@ public class PlaygroundTests {
 		// wait will occur (up to 10 seconds) and then a new link will get added with
 		// link text of 'click after wait'
 		// click this new link within 500 ms of it appearing to pass this test
-		driver.findElement(By.linkText("click then wait")).click();
+		click(clickThenWait);
 		WebDriverWait driverWait = new WebDriverWait(driver, Duration.ofSeconds(30));
-		driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("click after wait")));
-		driver.findElement(By.linkText("click after wait")).click();
+		driverWait.until(ExpectedConditions.visibilityOfElementLocated(clickAfterWait));
+		click(clickAfterWait);
 
 		// 16- Click OK on the confirm after completing task 15
 		Alert alert = driver.switchTo().alert();
 		alert.accept();
 
 		// 17- Click the submit button on the form
-		driver.findElement(By.name("submit")).click();
+		click(submit);
 
-		// Bonus!- Printing results on console
-		driver.findElement(By.id("checkresults")).click();
-		String passedTests = driver.findElement(By.id("showresults")).getText();
-		System.out.println(passedTests);
+		// Bonus!- Click Check Results button and Print result on console
+		click(checkResultsButton);
+		System.out.println(getText(result));
 
 		// scroll to bottom DIV
-		WebElement bottomDIV = driver.findElement(By.id("bottom"));
-		js.executeScript("arguments[0].scrollIntoView()", bottomDIV);
+		js.executeScript("arguments[0].scrollIntoView()", find(bottomDIV));
 
 		// scroll back to top
-		WebElement topHead = driver.findElement(By.id("tophead"));
-		js.executeScript("arguments[0].scrollIntoView()", topHead);
-
+		js.executeScript("arguments[0].scrollIntoView()", find(topHead));
 		Thread.sleep(5000);
-		driver.quit();
 
 	}
 
+	private WebElement find(By locator) {
+
+		return driver.findElement(locator);
+	}
+
+	private List<WebElement> finds(By locator) {
+
+		return driver.findElements(locator);
+	}
+
+	private void click(By locator) {
+
+		find(locator).click();
+	}
+
+	private void type(By locator, String text) {
+
+		find(locator).sendKeys(text);
+	}
+
+	private String getText(By locator) {
+
+		String text = find(locator).getText();
+		return text;
+	}
 }
