@@ -26,7 +26,7 @@ public class Base {
 		if (browser.equalsIgnoreCase("chrome")) {
 
 			ChromeOptions chromeOptions = new ChromeOptions();
-			WebDriverManager.chromedriver().clearDriverCache().setup();
+			WebDriverManager.chromedriver().browserVersion("107").clearDriverCache().setup();
 			chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
 			driver = new ChromeDriver(chromeOptions);
 
@@ -49,14 +49,17 @@ public class Base {
 	@AfterMethod
 	public void tearDown() {
 
-		driver.quit();
+		System.out.println(
+				"It seems that driver.close and driver.quit are sometimes generating a Connection reset (SocketException) issue, which is why i decided to leave the browser open after test completion");
+
+		// driver.close();
 
 	}
 
 	@AfterSuite
 	public void afterSuite() {
 
-		System.out.println("À bientôt");
+		System.out.println("\nA bientot");
 	}
 
 }
