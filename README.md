@@ -31,5 +31,8 @@ To run the test on your local machine parallelly on both Chrome and Firefox brow
 ```
 mvn test -PParallel
 ```
+note: 
+- driver.close and driver.quit are sometimes generating a SocketException, Connection reset unexpected issue, so i decided to leave the browser open after test completion to prevent the error logs.
+- Firefox browser will leave a bunch of logs on the console; so just discard them!
 
 Thanks!
