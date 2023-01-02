@@ -26,7 +26,7 @@ public class Base {
 		if (browser.equalsIgnoreCase("chrome")) {
 
 			ChromeOptions chromeOptions = new ChromeOptions();
-			WebDriverManager.chromedriver().browserVersion("107").clearDriverCache().setup();
+			WebDriverManager.chromedriver().clearDriverCache().setup();
 			chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
 			driver = new ChromeDriver(chromeOptions);
 
