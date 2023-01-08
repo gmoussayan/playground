@@ -17,7 +17,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class Base {
 
-	protected WebDriver driver;
+	public WebDriver driver;
 
 	@Parameters("Browser")
 	@BeforeMethod
@@ -47,12 +47,9 @@ public class Base {
 	}
 
 	@AfterMethod
-	public void tearDown() {
+	public void tearDown() throws InterruptedException {
 
-		System.out.println(
-				"It seems that driver.close and driver.quit are sometimes generating a Connection reset (SocketException) issue, which is why i decided to leave the browser open after test completion");
-
-		// driver.close();
+		driver.quit();
 
 	}
 
